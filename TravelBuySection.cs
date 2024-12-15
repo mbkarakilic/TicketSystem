@@ -165,14 +165,36 @@ namespace TicketSystem
 				TicketOwner ticketOwner = userInfo.GetTicketOwner();
 
 				// SQLite bağlantısını al
+				string pnr = "";
 				using (SQLiteConnection connection = DatabaseHelper.GetInstance().GetConnection())
 				{
 					connection.Open();
 
+					string[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".ToCharArray().Select(c => c.ToString()).ToArray();
+					string[] numbers = "123456789".ToCharArray().Select(c => c.ToString()).ToArray();
+
+					Random random = new Random();
+
+					for (int i = 0; i < 6; i++)
+					{
+						bool isNumber = random.Next(2) == 1;
+
+						if (isNumber)
+						{
+							string number = numbers[random.Next(numbers.Length)];
+							pnr += number;
+						}
+						else
+						{
+							string letter = alphabet[random.Next(alphabet.Length)];
+							pnr += letter;
+						}
+					}
+
 					// INSERT komutunu hazırla
 					string query = @"
-                INSERT INTO tickets (owner_name, owner_surname, owner_phone_number, owner_mail, owner_gender, seat_number, travel_id)
-                VALUES (@owner_name, @owner_surname, @owner_phone_number, @owner_mail, @owner_gender, @seat_number, @travel_id)";
+                INSERT INTO tickets (owner_name, owner_surname, owner_phone_number, owner_mail, owner_gender, seat_number, travel_id, pnr)
+                VALUES (@owner_name, @owner_surname, @owner_phone_number, @owner_mail, @owner_gender, @seat_number, @travel_id, @pnr)";
 
 					using (SQLiteCommand command = new SQLiteCommand(query, connection))
 					{
@@ -184,13 +206,14 @@ namespace TicketSystem
 						command.Parameters.AddWithValue("@owner_gender", ticketOwner.Gender);
 						command.Parameters.AddWithValue("@seat_number", seatInfo); // seatInfo zaten seçilen koltuk numarasını tutuyor
 						command.Parameters.AddWithValue("@travel_id", Travel.Id); // Travel objesindeki Id kullanılıyor
+						command.Parameters.AddWithValue("@pnr", pnr); // Travel objesindeki Id kullanılıyor
 
 						// Komutu çalıştır
 						command.ExecuteNonQuery();
 					}
 				}
 
-				MessageBox.Show("Ödeme İşlemi Başarılı\nSeyehat bilgileriniz size SMS olarak iletilecektir.");
+				MessageBox.Show($"Ödeme İşlemi Başarılı\nSeyehat bilgileriniz size SMS olarak iletilecektir.\n\nPNR Kodunuz:{pnr}");
 
 				// Ekranı kapat veya işlem tamamlandıktan sonra başka bir işlem yap
 				Close();

@@ -11,6 +11,7 @@ namespace TicketSystem
 		private Airplanes airplanes;
 		private Trains trains;
 		private AdminPanel adminPanel;
+		private Ticket ticket;
 
 		private User user = null;
 		public Main()
@@ -22,6 +23,7 @@ namespace TicketSystem
 			buses = new Buses();
 			airplanes = new Airplanes();
 			trains = new Trains();
+			ticket = new Ticket();
 
 			login.AddLoginObservers(this);
 
@@ -80,6 +82,23 @@ namespace TicketSystem
 			trainButton.BringToFront();
 			ShowFormInPanel(trains);
 		}
+		private void AdminPanelButtonOnClick(object sender, EventArgs e)
+		{
+			if (!user.IsAdmin) return;
+
+			SidePanel.Height = adminPanelButton.Height;
+			SidePanel.Top = adminPanelButton.Top;
+			adminPanelButton.BringToFront();
+			ShowFormInPanel(adminPanel);
+		}
+
+		private void HomeButtonOnClick(object sender, EventArgs e)
+		{
+			SidePanel.Height = homeButton.Height;
+			SidePanel.Top = homeButton.Top;
+			homeButton.BringToFront();
+			ShowFormInPanel(home);
+		}
 
 		public void OnLoginNotify(User user)
 		{
@@ -114,23 +133,12 @@ namespace TicketSystem
 			nameLabel.Visible = true;
 		}
 
-		private void AdminPanelButtonOnClick(object sender, EventArgs e)
+		private void TicketButtonOnClick(object sender, EventArgs e)
 		{
-			if (!user.IsAdmin) return;
-
-			SidePanel.Height = adminPanelButton.Height;
-			SidePanel.Top = adminPanelButton.Top;
-			adminPanelButton.BringToFront();
-			ShowFormInPanel(adminPanel);
-		}
-
-		private void HomeButtonOnClick(object sender, EventArgs e)
-		{
-			SidePanel.Height = homeButton.Height;
-			SidePanel.Top = homeButton.Top;
-			homeButton.BringToFront();
-			ShowFormInPanel(home);
-
+			SidePanel.Height = ticketButton.Height;
+			SidePanel.Top = ticketButton.Top;
+			ticketButton.BringToFront();
+			ShowFormInPanel(ticket);
 		}
 	}
 }

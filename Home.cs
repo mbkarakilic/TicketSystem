@@ -1,4 +1,5 @@
-﻿using MindFusion.Charting.Commands;
+﻿using MindFusion.Charting;
+using MindFusion.Charting.WinForms;
 using System.Data.SQLite;
 using TicketSystem.Models;
 
@@ -7,8 +8,14 @@ namespace TicketSystem
 	public partial class Home : Form
 	{
 		private List<Travel> buses, airplanes, trains;
+		private SimpleSeries busSeries, airplaneSeries, trainSeries;
+		private List<string> busOrder, airplaneOrder, trainOrder;
+		private List<double> busInfo, airplaneInfo, trainInfo;
+
+		private int chartIndex;
 		public Home()
 		{
+			chartIndex = 0;
 			InitializeComponent();
 
 			buses = FetchData(0);
@@ -27,6 +34,49 @@ namespace TicketSystem
 			{
 				Console.WriteLine(travel.From + "-" + travel.To + ":" + travel.Price);
 			}
+
+			dataChart.ShowLegend = false;
+			dataChart.ShowXCoordinates = false;
+
+			dataChart.YAxis.Interval = 20;
+			dataChart.YAxis.Title = "Fiyat";
+
+			dataChart.XAxis.Interval = 10;
+			dataChart.XAxis.MaxValue = 5;
+			dataChart.XAxis.MinValue = -1;
+			dataChart.XAxis.Title = "";
+
+			busOrder = [];
+			busInfo = new List<double>();
+			for (int i = 0; i < 5; i++)
+			{
+				Travel travel = buses[i];
+				busOrder.Add(travel.From + "-" + travel.To + ":" + travel.Price);
+				busInfo.Add(travel.Price);
+			}
+			busSeries = new SimpleSeries(busInfo, busOrder);
+
+			airplaneOrder = [];
+			airplaneInfo = new List<double>();
+			for (int i = 0; i < 5; i++)
+			{
+				Travel travel = airplanes[i];
+				airplaneOrder.Add(travel.From + "-" + travel.To + ":" + travel.Price);
+				airplaneInfo.Add(travel.Price);
+			}
+			airplaneSeries = new SimpleSeries(airplaneInfo, airplaneOrder);
+
+			trainOrder = [];
+			trainInfo = new List<double>();
+			for (int i = 0; i < 5; i++)
+			{
+				Travel travel = trains[i];
+				trainOrder.Add(travel.From + "-" + travel.To + ":" + travel.Price);
+				trainInfo.Add(travel.Price);
+			}
+			trainSeries = new SimpleSeries(trainInfo, trainOrder);
+
+			AdjustChart(0);
 		}
 
 		private List<Travel> FetchData(int classNo)
@@ -126,6 +176,29 @@ namespace TicketSystem
 
 			travels = travels.OrderBy(t => t.Price).ToList();
 			return travels;
+		}
+
+		private void ChartChangeButtonOnClick(object sender, EventArgs e)
+		{
+			chartIndex++;
+			if (chartIndex == 3) chartIndex = 0;
+			Console.WriteLine(chartIndex);
+			AdjustChart(chartIndex);
+		}
+
+		private void AdjustChart(int chartIndex)
+		{
+			string[] titles = { "Otobüsler", "Uçaklar", "Trenler" };
+			string[] buttonNames = { "Uçaklar", "Trenler", "Otobüsler" };
+			SimpleSeries[] series = { busSeries, airplaneSeries, trainSeries };
+			List<double>[] infos = { busInfo, airplaneInfo, trainInfo };
+			chartChangeButton.Text = buttonNames[chartIndex];
+			dataChart.Series.Clear();
+			dataChart.Series.Add(series[chartIndex]);
+
+			dataChart.Title = titles[chartIndex];
+			dataChart.YAxis.MaxValue = infos[chartIndex][4] + 100;
+			dataChart.YAxis.MinValue = infos[chartIndex][0] - 100;
 		}
 	}
 }

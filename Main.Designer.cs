@@ -40,13 +40,14 @@
 			trainButton = new Button();
 			profileButton = new Button();
 			homeButton = new Button();
+			ticketButton = new Button();
 			SuspendLayout();
 			// 
 			// loginButton
 			// 
 			loginButton.Image = (Image)resources.GetObject("loginButton.Image");
 			loginButton.ImageAlign = ContentAlignment.MiddleLeft;
-			loginButton.Location = new Point(8, 190);
+			loginButton.Location = new Point(8, 226);
 			loginButton.Name = "loginButton";
 			loginButton.Size = new Size(84, 23);
 			loginButton.TabIndex = 0;
@@ -144,7 +145,7 @@
 			// 
 			profileButton.Image = (Image)resources.GetObject("profileButton.Image");
 			profileButton.ImageAlign = ContentAlignment.MiddleLeft;
-			profileButton.Location = new Point(8, 190);
+			profileButton.Location = new Point(8, 226);
 			profileButton.Name = "profileButton";
 			profileButton.Size = new Size(84, 23);
 			profileButton.TabIndex = 8;
@@ -166,11 +167,25 @@
 			homeButton.UseVisualStyleBackColor = true;
 			homeButton.Click += HomeButtonOnClick;
 			// 
+			// ticketButton
+			// 
+			ticketButton.Image = (Image)resources.GetObject("ticketButton.Image");
+			ticketButton.ImageAlign = ContentAlignment.MiddleLeft;
+			ticketButton.Location = new Point(8, 152);
+			ticketButton.Name = "ticketButton";
+			ticketButton.Size = new Size(84, 23);
+			ticketButton.TabIndex = 10;
+			ticketButton.Text = "Biletim";
+			ticketButton.TextAlign = ContentAlignment.MiddleRight;
+			ticketButton.UseVisualStyleBackColor = true;
+			ticketButton.Click += TicketButtonOnClick;
+			// 
 			// Main
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(800, 450);
+			Controls.Add(ticketButton);
 			Controls.Add(homeButton);
 			Controls.Add(profileButton);
 			Controls.Add(trainButton);
@@ -202,5 +217,6 @@
 		private Button trainButton;
 		private Button profileButton;
 		private Button homeButton;
+		private Button ticketButton;
 	}
 }
