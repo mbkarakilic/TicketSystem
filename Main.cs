@@ -12,6 +12,7 @@ namespace TicketSystem
 		private Trains trains;
 		private AdminPanel adminPanel;
 		private Ticket ticket;
+		private Profile profile;
 
 		private User user = null;
 		public Main()
@@ -99,6 +100,18 @@ namespace TicketSystem
 			homeButton.BringToFront();
 			ShowFormInPanel(home);
 		}
+		private void ProfileButtonOnClick(object sender, EventArgs e)
+		{
+			if (profile == null)
+			{
+				profile = new Profile(user);
+			}
+
+			SidePanel.Height = profileButton.Height;
+			SidePanel.Top = profileButton.Top;
+			profile.BringToFront();
+			ShowFormInPanel(profile);
+		}
 
 		public void OnLoginNotify(User user)
 		{
@@ -140,5 +153,6 @@ namespace TicketSystem
 			ticketButton.BringToFront();
 			ShowFormInPanel(ticket);
 		}
+
 	}
 }

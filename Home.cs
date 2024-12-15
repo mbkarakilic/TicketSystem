@@ -200,5 +200,10 @@ namespace TicketSystem
 			dataChart.YAxis.MaxValue = infos[chartIndex][4] + 100;
 			dataChart.YAxis.MinValue = infos[chartIndex][0] - 100;
 		}
+
+		private void label1_Click(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

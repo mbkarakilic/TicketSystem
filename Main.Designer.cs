@@ -153,6 +153,7 @@
 			profileButton.TextAlign = ContentAlignment.MiddleRight;
 			profileButton.UseVisualStyleBackColor = true;
 			profileButton.Visible = false;
+			profileButton.Click += ProfileButtonOnClick;
 			// 
 			// homeButton
 			// 

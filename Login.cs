@@ -7,6 +7,8 @@ namespace TicketSystem
 	public partial class Login : Form, ILoginSubject
 	{
 		private List<ILoginObserver> observers;
+
+		private Signup signup;
 		public Login()
 		{
 			InitializeComponent();
@@ -72,6 +74,8 @@ namespace TicketSystem
 					Console.WriteLine($"ID: {id}, Name: {name}, Surname: {surname}, Email: {email}");
 
 					user = new User(id, name, surname, email, isAdmin);
+
+					user.Password = password;
 				}
 
 				loginFormPanel.Visible = false; // Giriş başarılı
@@ -86,5 +90,14 @@ namespace TicketSystem
 			connection.Close();
 		}
 
+		private void SignupButtonOnClick(object sender, EventArgs e)
+		{
+			if (signup == null || signup.IsDisposed)
+			{
+				signup = new Signup();
+			}
+
+			signup.ShowDialog();
+		}
 	}
 }

@@ -35,6 +35,7 @@
 			pictureBox1 = new PictureBox();
 			loginBtn = new Button();
 			passwordTxt = new TextBox();
+			signupButton = new Button();
 			loginFormPanel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
 			((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -52,6 +53,7 @@
 			// 
 			// loginFormPanel
 			// 
+			loginFormPanel.Controls.Add(signupButton);
 			loginFormPanel.Controls.Add(pictureBox2);
 			loginFormPanel.Controls.Add(pictureBox1);
 			loginFormPanel.Controls.Add(loginBtn);
@@ -65,7 +67,7 @@
 			// pictureBox2
 			// 
 			pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-			pictureBox2.Location = new Point(0, 114);
+			pictureBox2.Location = new Point(0, 79);
 			pictureBox2.Name = "pictureBox2";
 			pictureBox2.Size = new Size(30, 23);
 			pictureBox2.TabIndex = 3;
@@ -83,7 +85,7 @@
 			// loginBtn
 			// 
 			loginBtn.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-			loginBtn.Location = new Point(85, 195);
+			loginBtn.Location = new Point(85, 136);
 			loginBtn.Name = "loginBtn";
 			loginBtn.Size = new Size(75, 23);
 			loginBtn.TabIndex = 2;
@@ -94,13 +96,24 @@
 			// passwordTxt
 			// 
 			passwordTxt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-			passwordTxt.Location = new Point(40, 114);
+			passwordTxt.Location = new Point(40, 79);
 			passwordTxt.Margin = new Padding(10);
 			passwordTxt.Name = "passwordTxt";
 			passwordTxt.PasswordChar = '*';
 			passwordTxt.PlaceholderText = "Şifre";
 			passwordTxt.Size = new Size(171, 23);
 			passwordTxt.TabIndex = 1;
+			// 
+			// signupButton
+			// 
+			signupButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+			signupButton.Location = new Point(85, 196);
+			signupButton.Name = "signupButton";
+			signupButton.Size = new Size(75, 23);
+			signupButton.TabIndex = 4;
+			signupButton.Text = "Kayıt Ol";
+			signupButton.UseVisualStyleBackColor = true;
+			signupButton.Click += SignupButtonOnClick;
 			// 
 			// Login
 			// 
@@ -126,5 +139,6 @@
 		private Button loginBtn;
 		private PictureBox pictureBox1;
 		private PictureBox pictureBox2;
+		private Button signupButton;
 	}
 }
